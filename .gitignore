@@ -2,3 +2,4 @@ statistics/
 jobs/
 spider.log
 .pyc
+.python-version
