@@ -39,14 +39,19 @@ class Hierarchy(scrapy.Spider):
             for r in relations:
                 result.append('{},{},{}\n'.format(entity, r, main_entity))
             f.writelines(result)
+            logging.info('{}---{} relations saved'.format(main_entity, entity))
 
     def parse(self, response):
         main_label = response.meta['label']
+        logging.info('{} crawled'.format(main_label))
+
         content = json.loads(response.text)
         with open(self.get_filename(main_label), mode='w', encoding='UTF-8') as f:
             json.dump(content, f)
+            logging.info('{} saved'.format(main_label))
         
         main_entity = content[self.key_pattern.format(main_label)]
+        narrower_count = 0
         for e in content:
             if e == main_entity:
                 continue
@@ -58,6 +63,7 @@ class Hierarchy(scrapy.Spider):
                     continue
                 key = self.keys_to_go[r] 
                 if key in ['broader']:
+                    narrower_count += 1
                     yield scrapy.Request(
                         url=self.url_pattern.format(e_label),
                         callback=self.parse,
@@ -65,3 +71,4 @@ class Hierarchy(scrapy.Spider):
                     )
                 relations.append(key)
             self.save_relations(main_label, e_label, relations)
+        logging.info('{} has {} narrower entities'.format(main_label, narrower_count))
