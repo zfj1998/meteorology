@@ -2,5 +2,5 @@ statistics/
 jobs/
 backup/
 logs/
-.pyc
+__pycache__/
 .python-version
