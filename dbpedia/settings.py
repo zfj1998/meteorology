@@ -1,7 +1,7 @@
 
 BOT_NAME = 'dbpedia'
 
-LOG_FILE="spider.log"
+LOG_FILE="./logs/spider.log"
 LOG_LEVEL='INFO'
 
 SPIDER_MODULES = ['dbpedia.spiders']
