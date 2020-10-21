@@ -1,3 +1,6 @@
+# 利用relations.txt得到DBpedia爬取下来的所有实体集合
+# 采用多进程的方式把实体集合进行翻译
+# 把relations.txt翻译为t_relations.txt
 from googletrans import Translator
 import pickle
 import pandas
@@ -77,7 +80,8 @@ def translate_and_save():
         chunks = get_chunks(raw_list, 50)
         logging.info('total {} chunks to translate'.format(len(chunks)))
         pool = Pool()
-        for i in range(len(chunks)):
+        # for i in range(len(chunks)):
+        for i in range(2):
             pool.apply_async(translate_chunk_and_save, args=(chunks[i], i, ))
 
         pool.close()
@@ -120,6 +124,6 @@ def translate_relations():
 if __name__ == "__main__":
     # construct_dict()
     # translate_and_save()
-    # union_chunks()
-    translate_relations()
+    union_chunks()
+    # translate_relations()
 

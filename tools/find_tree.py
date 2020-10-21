@@ -1,3 +1,4 @@
+# 利用t_relations.txt，得到树形结构，并把树形结构保存为json格式
 import json
 import pandas
 import ipdb

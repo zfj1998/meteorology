@@ -1,3 +1,4 @@
+# 利用翻译后的t_relations.txt把实体和关系上传到neo4j中
 from py2neo import Graph,Node,Relationship
 import logging
 import pandas
@@ -38,6 +39,11 @@ def read_file(f_name=FILE_NAME):
     return results
 
 def main():
+    '''
+    读取文件，文件的每一行都是 e1, r, e2
+    如果实体不存在则创建，存在则更新
+    创建实体之间的关系，并上传至数据库
+    '''
     lines = read_file()
     start = time.time()
     line_no = 0
